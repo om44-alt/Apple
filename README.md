@@ -5,15 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Health Tracker - Login</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
-        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px gray; max-width: 500px; margin: auto; }
-        h1, h2 { color: #333; }
-        input, button { padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; width: 90%; }
-        button { background-color: #28a745; color: white; cursor: pointer; }
-        button:hover { background-color: #218838; }
-        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
-        th { background-color: #28a745; color: white; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            animation: gradientBackground 6s ease infinite;
+            color: white;
+            text-align: center;
+            padding: 50px;
+            margin: 0;
+        }
+        
+        @keyframes gradientBackground {
+            0% { background: linear-gradient(45deg, #6a11cb, #2575fc); }
+            50% { background: linear-gradient(45deg, #ff7e5f, #feb47b); }
+            100% { background: linear-gradient(45deg, #6a11cb, #2575fc); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+        }
+
+        h1, h2 {
+            color: #333;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        input, button {
+            padding: 12px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 5px;
+            width: 90%;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        input:focus, button:focus {
+            outline: none;
+            border: 2px solid #2575fc;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            animation: fadeIn 1s ease;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2575fc;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02);
+            transition: transform 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .input-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-container input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            background-color: transparent;
+            color: white;
+            font-size: 1rem;
+        }
+
+        .input-container label {
+            position: absolute;
+            left: 10px;
+            top: 12px;
+            color: #aaa;
+            transition: 0.3s;
+        }
+
+        .input-container input:focus + label,
+        .input-container input:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 10px;
+            font-size: 0.85rem;
+            color: #2575fc;
+        }
     </style>
 </head>
 <body>
@@ -22,7 +139,10 @@
     <div class="container" id="loginPage">
         <h1>Login</h1>
         <p>Enter your username to track your health data.</p>
-        <input type="text" id="username" placeholder="Enter Username">
+        <div class="input-container">
+            <input type="text" id="username" placeholder=" " required>
+            <label for="username">Enter Username</label>
+        </div>
         <button onclick="login()">Login</button>
     </div>
 
@@ -32,20 +152,30 @@
         <p>Welcome, <span id="userDisplay"></span>! <button onclick="logout()">Logout</button></p>
 
         <form id="healthForm">
-            <label for="date">Date:</label>
-            <input type="date" id="date" required>
+            <div class="input-container">
+                <input type="date" id="date" required>
+                <label for="date">Date</label>
+            </div>
 
-            <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" required>
+            <div class="input-container">
+                <input type="number" id="weight" required>
+                <label for="weight">Weight (kg)</label>
+            </div>
 
-            <label for="calories">Calories Consumed:</label>
-            <input type="number" id="calories" required>
+            <div class="input-container">
+                <input type="number" id="calories" required>
+                <label for="calories">Calories Consumed</label>
+            </div>
 
-            <label for="exercise">Exercise (mins):</label>
-            <input type="number" id="exercise" required>
+            <div class="input-container">
+                <input type="number" id="exercise" required>
+                <label for="exercise">Exercise (mins)</label>
+            </div>
 
-            <label for="water">Water Intake (liters):</label>
-            <input type="number" step="0.1" id="water" required>
+            <div class="input-container">
+                <input type="number" step="0.1" id="water" required>
+                <label for="water">Water Intake (liters)</label>
+            </div>
 
             <button type="submit">Save Data</button>
         </form>
@@ -73,7 +203,7 @@
 
         function login() {
             let username = document.getElementById("username").value.trim();
-            console.log("Login function called. Username:", username);  // Debugging log
+            console.log("Login function called. Username:", username);  
             if (username === "") {
                 alert("Please enter a username.");
                 return;
