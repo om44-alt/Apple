@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Health Tracker - Login</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #6e7c7e, #a9c1c4);
@@ -12,109 +18,96 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            color: #fff;
+            color: #333;
+            overflow: hidden;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
-            max-width: 500px;
-            width: 100%;
-            animation: fadeIn 1s ease-in-out;
+            border-radius: 12px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            width: 90%;
+            transition: transform 0.5s ease;
         }
 
-        h1 {
-            color: #4CAF50;
-            font-size: 2.5rem;
+        h1, h2 {
+            color: #28a745;
+            font-size: 24px;
             margin-bottom: 15px;
-        }
-
-        h2 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        p {
-            font-size: 1.1rem;
-            color: #555;
         }
 
         input, button {
             padding: 12px;
-            margin: 10px 0;
-            border: 2px solid #ddd;
+            margin: 8px 0;
+            border: 1px solid #ccc;
             border-radius: 6px;
             width: 100%;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        input:focus, button:hover {
-            border-color: #4CAF50;
-            background-color: #4CAF50;
-            color: white;
+            font-size: 16px;
         }
 
         button {
             background-color: #28a745;
             color: white;
             cursor: pointer;
-            font-weight: bold;
+            transition: background-color 0.3s ease;
         }
 
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
-
-        .form-container {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-container input {
-            margin-bottom: 15px;
+        button:hover {
+            background-color: #218838;
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
             margin-top: 20px;
+            border-collapse: collapse;
         }
 
         th, td {
-            padding: 12px;
-            text-align: center;
+            padding: 10px;
             border: 1px solid #ddd;
+            text-align: center;
         }
 
         th {
-            background-color: #4CAF50;
+            background-color: #28a745;
             color: white;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
+        .form-section, .record-section {
+            display: none;
         }
 
-        tr:hover {
-            background-color: #e1f5e1;
+        .show {
+            display: block;
         }
 
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
+        /* Mobile view adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            h1, h2 {
+                font-size: 20px;
+            }
+
+            input, button {
+                padding: 10px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- Login Page -->
-    <div class="container" id="loginPage">
+    <div class="container form-section" id="loginPage">
         <h1>Login</h1>
         <p>Enter your username to track your health data.</p>
         <input type="text" id="username" placeholder="Enter Username">
@@ -122,11 +115,11 @@
     </div>
 
     <!-- Health Tracker (Hidden until login) -->
-    <div class="container" id="healthTracker" style="display: none;">
+    <div class="container form-section" id="healthTracker">
         <h1>Health Tracker</h1>
         <p>Welcome, <span id="userDisplay"></span>! <button onclick="logout()">Logout</button></p>
 
-        <div class="form-container">
+        <form id="healthForm">
             <label for="date">Date:</label>
             <input type="date" id="date" required>
 
@@ -142,12 +135,12 @@
             <label for="water">Water Intake (liters):</label>
             <input type="number" step="0.1" id="water" required>
 
-            <button type="submit" onclick="saveData()">Save Data</button>
-        </div>
+            <button type="submit">Save Data</button>
+        </form>
     </div>
 
     <!-- User's Health Records -->
-    <div class="container" id="recordsContainer" style="display: none;">
+    <div class="container record-section" id="recordsContainer">
         <h2>Your Health Records</h2>
         <table id="healthTable">
             <thead>
@@ -177,9 +170,9 @@
             localStorage.setItem("currentUser", username);
             document.getElementById("userDisplay").innerText = username;
 
-            document.getElementById("loginPage").style.display = "none";
-            document.getElementById("healthTracker").style.display = "block";
-            document.getElementById("recordsContainer").style.display = "block";
+            document.getElementById("loginPage").classList.remove("show");
+            document.getElementById("healthTracker").classList.add("show");
+            document.getElementById("recordsContainer").classList.add("show");
 
             displayRecords();
         }
@@ -187,12 +180,14 @@
         function logout() {
             localStorage.removeItem("currentUser");
             currentUser = null;
-            document.getElementById("loginPage").style.display = "block";
-            document.getElementById("healthTracker").style.display = "none";
-            document.getElementById("recordsContainer").style.display = "none";
+            document.getElementById("loginPage").classList.add("show");
+            document.getElementById("healthTracker").classList.remove("show");
+            document.getElementById("recordsContainer").classList.remove("show");
         }
 
-        function saveData() {
+        document.getElementById("healthForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
             if (!currentUser) {
                 alert("Please log in first.");
                 return;
@@ -211,7 +206,7 @@
 
             displayRecords();
             document.getElementById("healthForm").reset();
-        }
+        });
 
         function displayRecords() {
             if (!currentUser) return;
@@ -238,9 +233,9 @@
             if (savedUser) {
                 currentUser = savedUser;
                 document.getElementById("userDisplay").innerText = currentUser;
-                document.getElementById("loginPage").style.display = "none";
-                document.getElementById("healthTracker").style.display = "block";
-                document.getElementById("recordsContainer").style.display = "block";
+                document.getElementById("loginPage").classList.remove("show");
+                document.getElementById("healthTracker").classList.add("show");
+                document.getElementById("recordsContainer").classList.add("show");
                 displayRecords();
             }
         });
