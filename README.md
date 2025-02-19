@@ -6,130 +6,108 @@
     <title>Health Tracker - Login</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(45deg, #6a11cb, #2575fc);
-            animation: gradientBackground 6s ease infinite;
-            color: white;
-            text-align: center;
-            padding: 50px;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e7c7e, #a9c1c4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
-        }
-        
-        @keyframes gradientBackground {
-            0% { background: linear-gradient(45deg, #6a11cb, #2575fc); }
-            50% { background: linear-gradient(45deg, #ff7e5f, #feb47b); }
-            100% { background: linear-gradient(45deg, #6a11cb, #2575fc); }
+            color: #fff;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.8);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
             max-width: 500px;
-            margin: auto;
-            transition: transform 0.3s ease-in-out;
+            width: 100%;
+            animation: fadeIn 1s ease-in-out;
         }
 
-        .container:hover {
-            transform: scale(1.05);
+        h1 {
+            color: #4CAF50;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
         }
 
-        h1, h2 {
-            color: #333;
-            text-transform: uppercase;
+        h2 {
+            font-size: 1.5rem;
             margin-bottom: 20px;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: #555;
         }
 
         input, button {
             padding: 12px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 5px;
-            width: 90%;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            width: 100%;
             font-size: 1rem;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
         }
 
-        input:focus, button:focus {
-            outline: none;
-            border: 2px solid #2575fc;
+        input:focus, button:hover {
+            border-color: #4CAF50;
+            background-color: #4CAF50;
+            color: white;
         }
 
         button {
             background-color: #28a745;
             color: white;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            font-weight: bold;
         }
 
-        button:hover {
-            background-color: #218838;
-            transform: scale(1.05);
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
-        button:active {
-            transform: scale(1);
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-container input {
+            margin-bottom: 15px;
         }
 
         table {
             width: 100%;
-            margin-top: 20px;
             border-collapse: collapse;
-            animation: fadeIn 1s ease;
+            margin-top: 20px;
         }
 
         th, td {
             padding: 12px;
-            border: 1px solid #ddd;
             text-align: center;
+            border: 1px solid #ddd;
         }
 
         th {
-            background-color: #2575fc;
+            background-color: #4CAF50;
             color: white;
         }
 
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
         tr:hover {
-            background-color: #f1f1f1;
-            transform: scale(1.02);
-            transition: transform 0.3s ease;
+            background-color: #e1f5e1;
         }
 
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
-        }
-
-        .input-container {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .input-container input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            background-color: transparent;
-            color: white;
-            font-size: 1rem;
-        }
-
-        .input-container label {
-            position: absolute;
-            left: 10px;
-            top: 12px;
-            color: #aaa;
-            transition: 0.3s;
-        }
-
-        .input-container input:focus + label,
-        .input-container input:not(:placeholder-shown) + label {
-            top: -8px;
-            left: 10px;
-            font-size: 0.85rem;
-            color: #2575fc;
         }
     </style>
 </head>
@@ -139,10 +117,7 @@
     <div class="container" id="loginPage">
         <h1>Login</h1>
         <p>Enter your username to track your health data.</p>
-        <div class="input-container">
-            <input type="text" id="username" placeholder=" " required>
-            <label for="username">Enter Username</label>
-        </div>
+        <input type="text" id="username" placeholder="Enter Username">
         <button onclick="login()">Login</button>
     </div>
 
@@ -151,34 +126,24 @@
         <h1>Health Tracker</h1>
         <p>Welcome, <span id="userDisplay"></span>! <button onclick="logout()">Logout</button></p>
 
-        <form id="healthForm">
-            <div class="input-container">
-                <input type="date" id="date" required>
-                <label for="date">Date</label>
-            </div>
+        <div class="form-container">
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
 
-            <div class="input-container">
-                <input type="number" id="weight" required>
-                <label for="weight">Weight (kg)</label>
-            </div>
+            <label for="weight">Weight (kg):</label>
+            <input type="number" id="weight" required>
 
-            <div class="input-container">
-                <input type="number" id="calories" required>
-                <label for="calories">Calories Consumed</label>
-            </div>
+            <label for="calories">Calories Consumed:</label>
+            <input type="number" id="calories" required>
 
-            <div class="input-container">
-                <input type="number" id="exercise" required>
-                <label for="exercise">Exercise (mins)</label>
-            </div>
+            <label for="exercise">Exercise (mins):</label>
+            <input type="number" id="exercise" required>
 
-            <div class="input-container">
-                <input type="number" step="0.1" id="water" required>
-                <label for="water">Water Intake (liters)</label>
-            </div>
+            <label for="water">Water Intake (liters):</label>
+            <input type="number" step="0.1" id="water" required>
 
-            <button type="submit">Save Data</button>
-        </form>
+            <button type="submit" onclick="saveData()">Save Data</button>
+        </div>
     </div>
 
     <!-- User's Health Records -->
@@ -203,7 +168,6 @@
 
         function login() {
             let username = document.getElementById("username").value.trim();
-            console.log("Login function called. Username:", username);  
             if (username === "") {
                 alert("Please enter a username.");
                 return;
@@ -228,9 +192,7 @@
             document.getElementById("recordsContainer").style.display = "none";
         }
 
-        document.getElementById("healthForm").addEventListener("submit", function(event) {
-            event.preventDefault();
-
+        function saveData() {
             if (!currentUser) {
                 alert("Please log in first.");
                 return;
@@ -249,7 +211,7 @@
 
             displayRecords();
             document.getElementById("healthForm").reset();
-        });
+        }
 
         function displayRecords() {
             if (!currentUser) return;
