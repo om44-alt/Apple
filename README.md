@@ -5,109 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Health Tracker - Login</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #6e7c7e, #a9c1c4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: #333;
-            overflow: hidden;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
-            max-width: 100%;
-            width: 90%;
-            transition: transform 0.5s ease;
-        }
-
-        h1, h2 {
-            color: #28a745;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        input, button {
-            padding: 12px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 20px;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-
-        th {
-            background-color: #28a745;
-            color: white;
-        }
-
-        .form-section, .record-section {
-            display: none;
-        }
-
-        .show {
-            display: block;
-        }
-
-        /* Mobile view adjustments */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .container {
-                padding: 20px;
-            }
-
-            h1, h2 {
-                font-size: 20px;
-            }
-
-            input, button {
-                padding: 10px;
-                font-size: 14px;
-            }
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
+        .container { background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px gray; max-width: 500px; margin: auto; }
+        h1, h2 { color: #333; }
+        input, button { padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; width: 90%; }
+        button { background-color: #28a745; color: white; cursor: pointer; }
+        button:hover { background-color: #218838; }
+        table { width: 100%; margin-top: 20px; border-collapse: collapse; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: #28a745; color: white; }
     </style>
 </head>
 <body>
 
     <!-- Login Page -->
-    <div class="container form-section" id="loginPage">
+    <div class="container" id="loginPage">
         <h1>Login</h1>
         <p>Enter your username to track your health data.</p>
         <input type="text" id="username" placeholder="Enter Username">
@@ -115,7 +27,7 @@
     </div>
 
     <!-- Health Tracker (Hidden until login) -->
-    <div class="container form-section" id="healthTracker">
+    <div class="container" id="healthTracker" style="display: none;">
         <h1>Health Tracker</h1>
         <p>Welcome, <span id="userDisplay"></span>! <button onclick="logout()">Logout</button></p>
 
@@ -140,7 +52,7 @@
     </div>
 
     <!-- User's Health Records -->
-    <div class="container record-section" id="recordsContainer">
+    <div class="container" id="recordsContainer" style="display: none;">
         <h2>Your Health Records</h2>
         <table id="healthTable">
             <thead>
@@ -170,9 +82,9 @@
             localStorage.setItem("currentUser", username);
             document.getElementById("userDisplay").innerText = username;
 
-            document.getElementById("loginPage").classList.remove("show");
-            document.getElementById("healthTracker").classList.add("show");
-            document.getElementById("recordsContainer").classList.add("show");
+            document.getElementById("loginPage").style.display = "none";
+            document.getElementById("healthTracker").style.display = "block";
+            document.getElementById("recordsContainer").style.display = "block";
 
             displayRecords();
         }
@@ -180,9 +92,9 @@
         function logout() {
             localStorage.removeItem("currentUser");
             currentUser = null;
-            document.getElementById("loginPage").classList.add("show");
-            document.getElementById("healthTracker").classList.remove("show");
-            document.getElementById("recordsContainer").classList.remove("show");
+            document.getElementById("loginPage").style.display = "block";
+            document.getElementById("healthTracker").style.display = "none";
+            document.getElementById("recordsContainer").style.display = "none";
         }
 
         document.getElementById("healthForm").addEventListener("submit", function(event) {
@@ -233,9 +145,9 @@
             if (savedUser) {
                 currentUser = savedUser;
                 document.getElementById("userDisplay").innerText = currentUser;
-                document.getElementById("loginPage").classList.remove("show");
-                document.getElementById("healthTracker").classList.add("show");
-                document.getElementById("recordsContainer").classList.add("show");
+                document.getElementById("loginPage").style.display = "none";
+                document.getElementById("healthTracker").style.display = "block";
+                document.getElementById("recordsContainer").style.display = "block";
                 displayRecords();
             }
         });
